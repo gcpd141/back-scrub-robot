@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# 模型文件（太大）
+models/*.obj
+models/*.stl
+models/*.msh
+
+# 运行时文件
+face_coord.json
+*.log
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
