@@ -1,110 +1,111 @@
-# 全自动搓背机器人仿真系统
+# Back Scrub Robot Simulation
 
-基于 MuJoCo 物理引擎的搓背机器人仿真系统，实现视觉追踪 + 机械臂控制联动。
+MuJoCo-based back scrub robot simulation system with visual tracking and robotic arm control.
 
-## 🎯 项目背景
+## 🎯 Project Overview
 
-这是一个概念验证项目，探索服务机器人在养老场景的应用可能性。通过视觉系统识别人脸位置，控制机械臂模拟搓背动作。
+A proof-of-concept project exploring service robot applications in elderly care scenarios. Uses vision system to detect face position and controls robotic arm to simulate back scrubbing motion.
 
-## 📦 项目结构
+## 📦 Project Structure
 
 ```
-back_scrub_robot/
-├── simulation.py      # MuJoCo 仿真控制
-├── vision.py          # OpenCV 人脸检测
-├── face_coord.json    # 坐标通信文件（运行时生成）
-├── models/            # 3D 模型文件
-└── README.md          # 本文件
+back-scrub-robot/
+├── simulation.py           # MuJoCo simulation control
+├── vision.py              # OpenCV face detection
+├── vision_driven_sim_fixed.py  # Fixed combined version
+├── vision_driven_sim_v2.py     # Improved version
+├── face_coord.json        # Coordinate file (runtime generated)
+├── models/                # 3D model files
+├── start.bat             # Windows quick start menu
+└── README.md             # This file
 ```
 
-## 🚀 快速开始
+## 🚀 Quick Start (Windows)
 
-### 环境要求
+### Option 1: Double-click to run (Recommended)
 
-```bash
+1. **Double-click** `start.bat`
+2. **Enter number** to select:
+   - `[1]` Start Vision (face detection)
+   - `[2]` Start Simulation (robot arm)
+   - `[3]` Run Combined (recommended)
+
+### Option 2: Command Line
+
+```cmd
+# 1. Install dependencies
 pip install mujoco opencv-python numpy
-```
 
-### 运行步骤
-
-**1. 启动视觉模块**
-```bash
+# 2. Start vision module (in one terminal)
 python vision.py
-```
 
-**2. 启动仿真模块**
-```bash
+# 3. Start simulation module (in another terminal)
 python simulation.py
+
+# OR run combined version
+python vision_driven_sim_fixed.py
 ```
 
-### 工作原理
+## 🔧 How It Works
 
-1. `vision.py` 调用摄像头，实时检测人脸位置
-2. 将人脸坐标写入 `face_coord.json`
-3. `simulation.py` 读取坐标文件，控制机械臂移动
-4. 机械臂跟随人脸位置，模拟搓背动作
+1. `vision.py` captures camera feed and detects face position
+2. Coordinates are written to `face_coord.json`
+3. `simulation.py` reads coordinates and moves robotic arm
+4. Arm follows face position, simulating back scrubbing
 
-## 📊 技术细节
+## 📊 Technical Details
 
-### 视觉模块
-- OpenCV Haar 级联分类器
-- 实时人脸检测（30 FPS）
-- 坐标映射（像素 → 仿真世界）
+### Vision Module
+- OpenCV Haar cascade classifier
+- Real-time face detection (30 FPS)
+- Coordinate mapping (pixels → simulation world)
 
-### 仿真模块
-- MuJoCo 物理引擎
-- 6 自由度机械臂控制
-- 力传感器反馈（检测接触力）
+### Simulation Module
+- MuJoCo physics engine
+- 6-DOF robotic arm control
+- Force sensor feedback (contact detection)
 
-## ⚠️ 已知问题
+## ⚠️ Known Issues
 
-### 视觉漂移问题
-当前版本存在视觉漂移问题，原因是：
-- 坐标文件读写存在延迟
-- 人脸检测偶尔丢失目标
-- 坐标映射参数需要校准
+### Visual Drift
+Current version has drift issues due to:
+- File read/write latency
+- Occasional face detection loss
+- Coordinate mapping needs calibration
 
-**改进方向**：
-- 使用 TCP/IP 通信替代文件读写
-- 加入卡尔曼滤波平滑轨迹
-- 增加目标丢失后的保持逻辑
+**Improvement directions**:
+- Use TCP/IP instead of file communication
+- Add Kalman filtering for smooth trajectory
+- Implement target-loss recovery logic
 
-## 💡 应用场景
+## 💡 Application Scenarios
 
-- 养老社区辅助服务
-- 医院康复护理
-- 家庭智能服务
+- Elderly care community assistance
+- Hospital rehabilitation nursing
+- Home intelligent service
 
-## 📝 项目状态
+## 📝 Project Status
 
-**当前状态**：仿真验证阶段
+**Current**: Simulation/Proof-of-concept stage
 
-**已完成**：
-- ✅ 基础仿真环境搭建
-- ✅ 视觉检测模块
-- ✅ 机械臂跟随控制
-- ✅ 力反馈检测
+**Completed**:
+- ✅ Basic simulation environment
+- ✅ Vision detection module
+- ✅ Robotic arm following control
+- ✅ Force feedback detection
 
-**待完成**：
-- ❌ 视觉漂移问题解决
-- ❌ 真实机械臂部署
-- ❌ 路径规划优化
-- ❌ 安全保护机制
+**TODO**:
+- ❌ Fix visual drift
+- ❌ Real robotic arm deployment
+- ❌ Path planning optimization
+- ❌ Safety mechanisms
 
-## 🎓 项目收获
-
-通过这个项目，学习了：
-- MuJoCo 物理引擎的使用
-- 视觉 - 控制系统的联动
-- 跨进程通信方案
-- 服务机器人的设计思路
-
-## 📄 许可证
+## 📄 License
 
 MIT License
 
 ---
 
-**作者**：宋涛  
-**日期**：2026.03  
-**联系**：296068696@qq.com
+**Author**: Song Tao  
+**Email**: 296068696@qq.com  
+**GitHub**: https://github.com/GCPD141/back-scrub-robot
